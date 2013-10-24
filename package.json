@@ -1,18 +1,18 @@
 {
-  "name": "grunt-rendr-stitch",
-  "description": "Use Stitch to package up your modules for use with Rendr (github.com/airbnb/rendr).",
-  "version": "0.0.8",
+  "name": "grunt-rendr-requirejs",
+  "description": "Use RequireJS to package up your modules for use with Rendr (github.com/airbnb/rendr).",
+  "version": "0.0.1",
   "homepage": "",
   "author": {
-    "name": "Spike Brehm",
-    "email": "ocelot@gmail.com"
+    "name": "Alex Indigo",
+    "email": "iam@alexindigo.com"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/airbnb/grunt-rendr-stitch.git"
+    "url": "git://github.com/alexindigo/grunt-rendr-requirejs.git"
   },
   "bugs": {
-    "url": "https://github.com/airbnb/grunt-rendr-stitch/issues"
+    "url": "https://github.com/alexi/grunt-rendr-requirejs/issues"
   },
   "licenses": [
     {
@@ -28,7 +28,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "stitch": "git://github.com/joeyespo/stitch#2e4e6cdb2be204740ca341da787aaac00d347721",
+    "requirejs": "~2.1.8",
     "coffee-script": "~1.6.2",
     "async": "~0.2.9"
   },

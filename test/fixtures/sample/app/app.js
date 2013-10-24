@@ -1,2 +1,7 @@
-var App = module.exports = function App() {};
-App.prototype.name = 'sample';
+define(['jquery'], function ($) {
+    return {
+        getBody: function () {
+            return $('body');
+        }
+    };
+});

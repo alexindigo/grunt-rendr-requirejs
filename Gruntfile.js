@@ -1,9 +1,5 @@
 /*
- * grunt-rendr-stitch
- *
- *
- * Copyright (c) 2013 Spike Brehm
- * Licensed under the MIT license.
+ * grunt-rendr-requirejs
  */
 
 'use strict';
@@ -29,39 +25,42 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    rendr_stitch: {
-      sample: {
+    rendr_requirejs: {
+      compile: {
         options: {
-          dependencies: [
-            'test/fixtures/sample/deps/**/*.js',
+          appDir: 'test/fixtures/sample',
+          mainConfigFile: 'test/fixtures/sample/common.js',
+          dir: 'tmp/test/sample',
+          node_modules:
+          [
+            {name: 'grunt', location: 'grunt/lib/util', main: 'exit.js'}
           ],
-          npmDependencies: {
-            grunt: 'lib/util/exit.js'
-          },
-          aliases: [
-            {from: 'test/fixtures/sample/some_module/shared', to: 'rendr/shared'}
+          modules: [
+            {
+              name: '../common',
+              include:
+              [
+                'jquery',
+                'grunt',
+                'shared/module',
+                'app/controller/Base',
+                'app/model/Base'
+              ],
+            },
+            {
+                name: '../bundle',
+                include: ['app/app'],
+                exclude: ['../common']
+            },
+            {
+                name: '../other-bundle',
+                include: ['../other/foo'],
+                exclude: ['../common']
+            }
           ]
-        },
-        files: [{
-          dest: 'tmp/test/sample/bundle.js',
-          src: [
-            'test/fixtures/sample/app/**/*.js',
-            'test/fixtures/sample/some_module/shared/**/*.js'
-          ]
-        }, {
-          dest: 'tmp/test/sample/other-bundle.js',
-          src: [
-            'test/fixtures/sample/other/**/*.js'
-          ]
-        }]
-      },
-      // default_options: {
-      //   options: {
-      //   },
-      //   files: {
-      //     'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-      //   },
-      // },
+        }
+
+      }
     },
 
     // Unit tests.
@@ -81,9 +80,10 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'rendr_stitch', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'rendr_requirejs', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('build', ['clean', 'rendr_requirejs']);
 
 };

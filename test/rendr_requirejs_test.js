@@ -22,7 +22,7 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
-exports.rendr_stitch = {
+exports.rendr_requirejs = {
   setUp: function(done) {
     // setup here if necessary
     done();

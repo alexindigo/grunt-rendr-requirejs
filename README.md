@@ -1,4 +1,9 @@
-# grunt-rendr-stitch
+
+# grunt-rendr-requirejs
+
+Copied from grunt-rendr-stitch. Still work in progress.
+
+# Stitch leftovers
 
 > Use Stitch to package up your modules for use with Rendr (github.com/airbnb/rendr).
 
@@ -8,25 +13,25 @@ This plugin requires Grunt `~0.4.1`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-rendr-stitch --save-dev
+npm install grunt-rendr-requirejs --save-dev
 ```
 
 One the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-rendr-stitch');
+grunt.loadNpmTasks('grunt-rendr-requirejs');
 ```
 
-## The "rendr_stitch" task
+## The "rendr_requirejs" task
 
 ### Overview
-In your project's Gruntfile, add a section named `rendr_stitch` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `rendr_requirejs` to the data object passed into `grunt.initConfig()`.
 
 In this example, you can see how to use `options.dependencies` and `options.aliases`.
 
 ```js
 grunt.initConfig({
-  rendr_stitch: {
+  rendr_requirejs: {
     options: {
       dependencies: [
     	'assets/vendor/**/*.js'
@@ -68,7 +73,7 @@ In Node.js, this path will tell the module loader to look into the NPM module na
 Type: `Array`
 Default value: `[]`
 
-An array of file glob patterns to pass as dependencies to `stitch.createPackage()`. These files are prepended to the bundled JavaScript package as-is, without being wrapped as a Stitch module. This is useful for third-party client-side only files, such as jQuery, that aren't wrapped in a CommonJS module.
+An array of file glob patterns to pass as dependencies to `requirejs.createPackage()`. These files are prepended to the bundled JavaScript package as-is, without being wrapped as a Stitch module. This is useful for third-party client-side only files, such as jQuery, that aren't wrapped in a CommonJS module.
 
 #### options.aliases
 Type: `Array`
@@ -93,25 +98,7 @@ Then, in the client-side you can require the module using the aliased path:
 var something = require('fancy/path/in/client/lib/something');
 ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
 ## Release History
 
-### 0.0.8
-Better support for multi tasks.
-
-### 0.0.6
-Use `path.normalize()` with `npmDependencies` for more flexibility.
-
-### 0.0.5
-Add `npmDependencies` option for packaging NPM modules for browser.
-
-### 0.0.4
-Swap out `stitch` dependency for fork that supports Windows file paths.
-
-### 0.0.3
-Clean `tmp` dir on every run, to prevent picking up old files.
-
 ### 0.0.1
-Initial release.
+grunt-rendr-stitch mangled into grunt-rendr-requirejs.
