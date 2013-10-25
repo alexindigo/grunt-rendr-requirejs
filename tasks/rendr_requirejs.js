@@ -45,9 +45,10 @@ module.exports = function(grunt) {
         var name, modulePath;
 
         // go thru path modification to get node_modules path prefix
-        if ((name = module.location.split('/')[0]) && (modulePath = require.resolve(name)))
+        if (modulePath = require.resolve(path.join(module.location, module.main)))
         {
-          module.location = path.normalize(modulePath.split('/node_modules/')[0] + '/node_modules/' + module.location);
+          module.location = path.dirname(modulePath);
+          module.main     = path.basename(modulePath);
 
           if (!grunt.file.exists(module.location))
           {
