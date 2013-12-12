@@ -1,11 +1,9 @@
 
 # grunt-rendr-requirejs
 
-Copied from grunt-rendr-stitch. Still work in progress.
+Adopted grunt-rendr-stitch to use with RequireJS (work in progress).
 
-# Stitch leftovers
-
-> Use Stitch to package up your modules for use with Rendr (github.com/airbnb/rendr).
+> Use RequireJS to package up your modules for use with Rendr (github.com/airbnb/rendr).
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -16,7 +14,7 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 npm install grunt-rendr-requirejs --save-dev
 ```
 
-One the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
 grunt.loadNpmTasks('grunt-rendr-requirejs');
@@ -27,76 +25,76 @@ grunt.loadNpmTasks('grunt-rendr-requirejs');
 ### Overview
 In your project's Gruntfile, add a section named `rendr_requirejs` to the data object passed into `grunt.initConfig()`.
 
-In this example, you can see how to use `options.dependencies` and `options.aliases`.
 
 ```js
 grunt.initConfig({
   rendr_requirejs: {
     options: {
-      dependencies: [
-    	'assets/vendor/**/*.js'
+      appDir: 'assets',
+      mainConfigFile: 'assets/common.js',
+      dir: 'public',
+      node_modules:
+      [
+        {name: 'async', location: 'async/lib', main: 'async.js'}
       ],
-      aliases: [
-      	{from: 'node_modules/rendr/shared', to: 'rendr/shared'},
-      	{from: 'node_modules/rendr/client', to: 'rendr/client'}
-      ]
-    },
-    files: {
-      dest: 'public/bundle.js',
-      src: [
-      	'app/**/*.js',
-      	'node_modules/rendr/shared/**/*.coffee',
-      	'node_modules/rendr/client/**/*.coffee'
+      modules: [
+        {
+          name: '../common',
+          include:
+          [
+            'jquery',
+            'async  ',
+            'shared/module',
+            'app/controller/Base',
+            'app/model/Base'
+          ],
+        },
+        {
+            name: '../bundle',
+            include: ['app/app'],
+            exclude: ['../common']
+        },
+        {
+            name: '../other-bundle',
+            include: ['../other/foo'],
+            exclude: ['../common']
+        }
       ]
     }
   }
 });
 ```
 
-We can then use Stitch in the browser to require any of the source files.
+We can then use RequireJS in the browser to require any of the source files.
 
 ```js
-var UserShowView = require('app/views/user_show_view');
+require(['app/views/user_show_view'], function(UserShowView)
+{
+  ...
+});
 ```
 
-Aliases allow us to use the the same paths for requiring NPM modules in both Node.js and in the browser. For example:
+Together with ```amdefine``` could be used for requiring modules in both Node.js and in the browser. For example:
 
 ```js
-var BaseView = require('rendr/shared/base/view');
-```
+if (typeof define !== 'function') {
+  var define = require('amdefine')(module);
+}
 
-In Node.js, this path will tell the module loader to look into the NPM module named `rendr` to find the specified module. In the browser, we can do the same thing because we've bundled `node_modules/rendr/shared/**/*.coffee` and set up an alias to `rendr/shared`.
+define(['../base'], function(BaseView) {
+
+});
+```
 
 ### Options
 
-#### options.dependencies
-Type: `Array`
-Default value: `[]`
+#### options.node_modules
+Type: `Object`
+Default value: `{}`
 
-An array of file glob patterns to pass as dependencies to `requirejs.createPackage()`. These files are prepended to the bundled JavaScript package as-is, without being wrapped as a Stitch module. This is useful for third-party client-side only files, such as jQuery, that aren't wrapped in a CommonJS module.
+An object containing a list of node modules to pass as `options.packages` to `requirejs.optimize()`.
 
-#### options.aliases
-Type: `Array`
-Default value: `[]`
-
-Aliases provide a way to do fancy bundling of Stitch packages in order to replicate something like NPM module paths from Node. Each element in the array is an object with `from` and `to` properties. For example:
-
-```js
-dependencies: [
-  {from: 'some/path/on/disk', to: 'fancy/path/in/client'}
-]
-```
-
-Suppose the `some/path/on/disk` directory looks like this:
-
-    |- util.js
-    |- lib/something.js
-
-Then, in the client-side you can require the module using the aliased path:
-
-```js
-var something = require('fancy/path/in/client/lib/something');
-```
+`options.node_modules` is optional and can be omitted.
 
 ## Release History
 
