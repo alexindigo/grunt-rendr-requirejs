@@ -28,7 +28,7 @@ exports.rendr_requirejs = {
     done();
   },
   sample: function(test) {
-    test.expect(2);
+    test.expect(3);
 
     var actual = grunt.file.read('tmp/test/sample/bundle.js');
     var expected = grunt.file.read('test/expected/sample/bundle.js');
@@ -37,6 +37,10 @@ exports.rendr_requirejs = {
     actual = grunt.file.read('tmp/test/sample/other-bundle.js');
     expected = grunt.file.read('test/expected/sample/other-bundle.js');
     test.equal(actual, expected, 'should generate a 2nd bundle w/o dependencies.');
+
+    actual = grunt.file.read('tmp/test/sample/common.js');
+    expected = grunt.file.read('test/expected/sample/common.js');
+    test.equal(actual, expected, 'should generate a common shared file.');
 
     test.done();
   },

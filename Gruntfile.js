@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           dir: 'tmp/test/sample',
           node_modules:
           [
-            {name: 'grunt', location: 'grunt/lib/util', main: 'exit.js'}
+            {name: 'async', location: 'async/lib', main: 'async.js'}
           ],
           modules: [
             {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
               include:
               [
                 'jquery',
-                'grunt',
+                'async',
                 'shared/module',
                 'app/controller/Base',
                 'app/model/Base'
