@@ -43,7 +43,7 @@ grunt.initConfig({
           include:
           [
             'jquery',
-            'async  ',
+            'async',
             'shared/module',
             'app/controller/Base',
             'app/model/Base'
@@ -97,6 +97,10 @@ An object containing a list of node modules to pass as `options.packages` to `re
 `options.node_modules` is optional and can be omitted.
 
 ## Release History
+
+### 0.1.0
+Changed resolution of `node_modules` section, now it will check dependencies of the `rendr` module and if not found,
+will travel up directory tree, same as standard dependency resolution.
 
 ### 0.0.1
 grunt-rendr-stitch mangled into grunt-rendr-requirejs.

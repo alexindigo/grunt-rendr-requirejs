@@ -33,7 +33,9 @@ module.exports = function(grunt) {
           dir: 'tmp/test/sample',
           node_modules:
           [
-            {name: 'async', location: 'async/lib', main: 'async.js'}
+            {name: 'async', location: 'async/lib', main: 'async.js'},
+            {name: 'underscore', location: 'underscore', main: 'underscore.js'}, // will be fetch from rendr dependency
+            {name: 'backbone', location: 'backbone', main: 'backbone.js'} // will be fetch from rendr peerDependency
           ],
           modules: [
             {

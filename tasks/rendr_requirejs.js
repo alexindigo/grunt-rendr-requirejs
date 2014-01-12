@@ -8,9 +8,18 @@
 
 'use strict';
 
+// To get reference to the Rendr module itself,
+// we will require it as first child of the current module
+// and get reference as the first element of the children array
+var rendr       = require('rendr')
+  , rendrModule = module.children[0]
+  ;
+
+// Proceed as normal
 var path      = require('path')
   , requirejs = require('requirejs')
   , async     = require('async')
+  , Module    = require('module')
   ;
 
 module.exports = function(grunt) {
@@ -40,28 +49,28 @@ module.exports = function(grunt) {
     // process node_modules
     if (options.node_modules)
     {
-      options.packages = (options.packages || []).concat(grunt.util._.map(options.node_modules, function(module)
+      options.packages = (options.packages || []).concat(grunt.util._.map(options.node_modules, function(nodeModule)
       {
         var name, modulePath;
 
-        // go thru path modification to get node_modules path prefix
-        if (modulePath = require.resolve(path.join(module.location, module.main)))
+        // run standard module path resolver based of Rendr module
+        if (modulePath = Module._resolveFilename(path.join(nodeModule.location, nodeModule.main), rendrModule))
         {
-          module.location = path.dirname(modulePath);
-          module.main     = path.basename(modulePath);
+          nodeModule.location = path.dirname(modulePath);
+          nodeModule.main     = path.basename(modulePath);
 
-          if (!grunt.file.exists(module.location))
+          if (!grunt.file.exists(nodeModule.location))
           {
-            grunt.log.warn('Source file "' + module.location + '" not found.');
+            grunt.log.warn('Source file "' + nodeModule.location + '" not found.');
             return false;
           }
 
           // main exit
-          return module;
+          return nodeModule;
         }
         else
         {
-          grunt.log.warn('Unable to find node module path "' + module.location + '".');
+          grunt.log.warn('Unable to find node module path "' + nodeModule.location + '".');
           return false;
         }
 
@@ -72,7 +81,5 @@ module.exports = function(grunt) {
 
     requirejs.optimize(options, options.done.bind(null, done));
   });
-
-
 
 };
