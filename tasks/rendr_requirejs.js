@@ -17,6 +17,7 @@ var rendr       = require('rendr')
 
 // Proceed as normal
 var path      = require('path')
+  , crypto    = require('crypto')
   , requirejs = require('requirejs')
   , async     = require('async')
   , glob      = require('glob')
@@ -38,7 +39,8 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('rendr_requirejs', 'Build a RequireJS project.', function() {
 
-    var done = this.async()
+    var outFile
+      , done = this.async()
       , options = this.options(
         {
           logLevel: 0,
@@ -50,6 +52,73 @@ module.exports = function(grunt) {
         })
       , expandedInclude = []
       ;
+
+    // handle hashing
+    // TODO: Add support for hashing dir output
+    // example:
+    // {
+    //   hashed: true, // append content hash suffix
+    //   storeHash: 'config/runtime.json', // config file to store generated hash
+    //   configPath: 'appData.static.js.common', // config path to the hash key
+    // }
+    if (options.hashed && options.out)
+    {
+      outFile = path.resolve(process.cwd(), options.out);
+
+      options.out = function outHashing(text)
+      {
+        var hash
+          , configData
+          , configKey
+          , nodes
+          , key
+          , md5sum = crypto.createHash('md5')
+          ;
+
+        md5sum.update(text);
+        hash = md5sum.digest('hex');
+
+        // update filename
+        outFile = outFile.replace(/\.js$/, '.'+hash+'.js');
+
+        grunt.file.write(outFile, text);
+
+        // update config
+        // TODO: Only JSON for now
+        if (options.storeHash && options.configPath)
+        {
+          // prepare config nodes
+          nodes = options.configPath.split('.');
+
+          // get config data
+          configKey = configData = grunt.file.readJSON(options.storeHash);
+
+          // update config
+          while (key = nodes.shift())
+          {
+            // create necessary sublevels
+            if (!configKey.hasOwnProperty(key))
+            {
+              configKey[key] = {};
+            }
+
+            // shift reference
+            if (nodes.length)
+            {
+              configKey = configKey[key];
+            }
+            // or assign hash if it's leaf-node
+            else
+            {
+              configKey[key] = path.basename(outFile);
+            }
+          }
+
+          // store data back to disk
+          grunt.file.write(options.storeHash, JSON.stringify(configData));
+        }
+      }
+    }
 
     // process node_modules
     if (options.node_modules)

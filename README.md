@@ -98,8 +98,11 @@ An object containing a list of node modules to pass as `options.packages` to `re
 
 ## Release History
 
+### 0.2.1
+Added content hashing function (Experimental).
+
 ### 0.2.0
-Added glob parsing in include (root) blocks with mapping (paths) support.
+Added glob parsing in include (root) blocks with mapping (paths) support (Experimental).
 
 ### 0.1.0
 Changed resolution of `node_modules` section, now it will check dependencies of the `rendr` module and if not found,
