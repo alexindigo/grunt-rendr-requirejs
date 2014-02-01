@@ -65,6 +65,7 @@ module.exports = function(grunt) {
     {
       outFile = path.resolve(process.cwd(), options.out);
 
+      // overwrite out file with custom fucntion
       options.out = function outHashing(text)
       {
         var hash
@@ -166,10 +167,6 @@ module.exports = function(grunt) {
             expandedInclude = expandedInclude.concat(files);
             cb();
           });
-          // // find mapping
-          // filePath = findMapping(options.paths, filePath);
-
-          // expandedInclude = expandedInclude.concat( glob.sync(filePath, {cwd: path.resolve(process.cwd(), options.baseUrl || '')}) );
         }
         else
         {
