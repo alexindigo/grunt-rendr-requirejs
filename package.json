@@ -1,7 +1,7 @@
 {
   "name": "grunt-rendr-requirejs",
   "description": "Use RequireJS to package up your modules for use with Rendr (github.com/airbnb/rendr).",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/alexindigo/grunt-rendr-requirejs",
   "author": {
     "name": "Alex Indigo",
@@ -20,7 +20,7 @@
       "url": "/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "Gruntfile.js",
+  "main": "tasks/rendr_requirejs.js",
   "engines": {
     "node": ">= 0.8.0"
   },
