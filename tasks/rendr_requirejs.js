@@ -23,24 +23,35 @@ var path      = require('path')
   , Module    = require('module')
   ;
 
-module.exports = function(grunt) {
+// export main function
+module.exports = gruntRendrRequireJs;
+// expose helper function
+module.exports.updateConfigNode = updateConfigNode;
+
+function gruntRendrRequireJs(grunt)
+{
 
   // add grunt instance to the config update function
   updateConfigNode = updateConfigNode.bind(this, grunt);
 
-  requirejs.define('node/print', [], function() {
-    return function print(msg) {
-      if (msg.substring(0, 5) === 'Error') {
+  requirejs.define('node/print', [], function()
+  {
+    return function print(msg)
+    {
+      if (msg.substring(0, 5) === 'Error')
+      {
         grunt.log.errorlns(msg);
         grunt.fail.warn('RequireJS failed.');
-      } else {
+      }
+      else
+      {
         grunt.log.oklns(msg);
       }
     };
   });
 
-  grunt.registerMultiTask('rendr_requirejs', 'Build a RequireJS project.', function() {
-
+  grunt.registerMultiTask('rendr_requirejs', 'Build a RequireJS project.', function()
+  {
     var i
       , outFile
       , moduleList
@@ -372,7 +383,7 @@ function unfoldPath(oPath, options, callback)
  * Updates specified node in config file with provided value
  * `node` parameter is dot-separated path to the config node
  */
- function updateConfigNode(grunt, filename, node, value)
+ function updateConfigNode(grunt, filename, node, value, reset)
  {
     var nodes
       , configKey
@@ -403,7 +414,7 @@ function unfoldPath(oPath, options, callback)
       // or assign hash if it's leaf-node
       else
       {
-        if (typeof value == 'object')
+        if (typeof value == 'object' && !reset)
         {
           configKey[key] = merge(configKey[key], value);
         }

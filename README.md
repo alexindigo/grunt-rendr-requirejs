@@ -98,6 +98,10 @@ An object containing a list of node modules to pass as `options.packages` to `re
 
 ## Release History
 
+### 0.3.1
+Exposed `updateConfigNode` method for grunt tasks. (Experimental)
+Added `reset` argument to `updateConfigNode`. (Experimental)
+
 ### 0.3.0
 Added `shallow` option for modules multi-module and single file bundling. (Experimental)
 Added short form modules listing when `shallow` options is used.
