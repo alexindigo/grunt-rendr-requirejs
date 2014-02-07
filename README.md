@@ -98,6 +98,10 @@ An object containing a list of node modules to pass as `options.packages` to `re
 
 ## Release History
 
+### 0.3.3
+Exposed `unfoldPath`, `getModulePaths` and `findDependencies` for better integration.
+Added `_keepFullPath` option to return list of fullpath files, useful for testing. (Experimental)
+
 ### 0.3.1
 Exposed `updateConfigNode` method for grunt tasks. (Experimental)
 Added `reset` argument to `updateConfigNode`. (Experimental)

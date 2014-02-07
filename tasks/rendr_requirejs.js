@@ -27,10 +27,13 @@ var path      = require('path')
 module.exports = gruntRendrRequireJs;
 // expose helper function
 module.exports.updateConfigNode = updateConfigNode;
+module.exports.unfoldPath       = unfoldPath;
+module.exports.getModulePaths   = getModulePaths;
+module.exports.findDependencies = findDependencies;
 
+// main
 function gruntRendrRequireJs(grunt)
 {
-
   // add grunt instance to the config update function
   updateConfigNode = updateConfigNode.bind(this, grunt);
 
@@ -371,7 +374,15 @@ function unfoldPath(oPath, options, callback)
     // TODO: Add support for other extensions than `js`
     for (i=0; i<files.length; i++)
     {
-      files[i] = files[i].replace(realPattern, pathParts.base).replace(/\.js$/, '');
+      // for tests we need fullpath
+      if (options._keepFullPath)
+      {
+        files[i] = path.resolve(pathParts.cwd, files[i]);
+      }
+      else
+      {
+        files[i] = files[i].replace(realPattern, pathParts.base).replace(/\.js$/, '');
+      }
     }
 
     callback(null, files);
