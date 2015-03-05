@@ -39,11 +39,10 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt": "~0.4.1",
-    "rendr": "~0.5.0"
+    "rendr": "~1.0.1"
   },
   "peerDependencies": {
-    "grunt": "~0.4",
-    "rendr": "~0.5"
+    "grunt": "~0.4"
   },
   "keywords": [
     "gruntplugin",
