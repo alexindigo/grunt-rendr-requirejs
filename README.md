@@ -3,7 +3,7 @@
 
 Adopted grunt-rendr-stitch to use with RequireJS (work in progress).
 
-> Use RequireJS to package up your modules for use with Rendr (github.com/airbnb/rendr).
+> Use RequireJS to package up your modules for use with Rendr (https://github.com/rendrjs/rendr).
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -97,6 +97,9 @@ An object containing a list of node modules to pass as `options.packages` to `re
 `options.node_modules` is optional and can be omitted.
 
 ## Release History
+
+### 1.0.0
+Update Rendr version to 1.0.1
 
 ### 0.3.3
 Exposed `unfoldPath`, `getModulePaths` and `findDependencies` for better integration.
