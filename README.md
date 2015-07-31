@@ -1,6 +1,8 @@
 
 # grunt-rendr-requirejs
 
+[![Join the chat at https://gitter.im/alexindigo/grunt-rendr-requirejs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexindigo/grunt-rendr-requirejs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Adopted grunt-rendr-stitch to use with RequireJS (work in progress).
 
 > Use RequireJS to package up your modules for use with Rendr (https://github.com/rendrjs/rendr).
